@@ -4,5 +4,7 @@
 #define __DEPRECATED__
 #define __DEBUGGING__
 
+#include "anchor.h"
+#include "tag.h"
 
 #endif
