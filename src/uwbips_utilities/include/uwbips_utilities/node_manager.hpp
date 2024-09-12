@@ -5,10 +5,15 @@
 #include <memory>
 #include <thread>
 #include <map>
-#include <string>
 #include "rclcpp/rclcpp.hpp"
-#include "std_msgs/msg/string.hpp"
-#include "json.hpp"
+#include "uwbips_utilities/anchor_node.hpp"
+#include "uwbips_utilities/tag_node.hpp"
+#include "uwbips_utilities/msg/nodeman_req.hpp"
+
+#define NODE_MANAGER_TOPIC  "uwbips/nodeman"
+#define NODE_MANAGER_QOS    1000
+#define IPS_PROCESSOR_TOPIC "uwbips/ips_processor"
+#define IPS_PROCESSOR_QOS   1000
 
 using namespace std::chrono_literals;
 using std::placeholders::_1;
@@ -19,7 +24,7 @@ namespace uwbips {
 
         public:
 
-            NodeManager();
+            NodeManager(std::string node_name);
 
             ~NodeManager();
 
@@ -28,13 +33,14 @@ namespace uwbips {
             enum node_type : uint8_t {
                 TYPE_ANCHOR,
                 TYPE_ANCHOR_MASTER,
-                TYPE_TAG
+                TYPE_TAG_TWR,
+                TYPE_TAG_TDOA,
+                TYPE_TAG_ALL,
+                TYPE_ANCHOR_ALL
             };
 
             enum manager_cmd : uint8_t {
                 CMD_CREATE_NODE,
-                CMD_PAUSE_NODE,
-                CMD_START_NODE,
                 CMD_DESTROY_NODE
             };
 
@@ -46,15 +52,27 @@ namespace uwbips {
 
             std::thread *executor_thread;
 
+            std::map<std::string, std::shared_ptr<AnchorNode>> anchor_node_map;
+
+            std::map<std::string, std::shared_ptr<TagNode>> tag_node_map;
+
             rclcpp::executors::MultiThreadedExecutor *executor;
 
-            rclcpp::Subscription<std_msgs::msg::String>::SharedPtr request_sub;
+            rclcpp::Subscription<uwbips_utilities::msg::NodemanReq>::SharedPtr request_sub;
 
+            void requestSubCallback(const uwbips_utilities::msg::NodemanReq::SharedPtr msg);
+            
             void executorThread();
 
-            void requestSubCallback(const std_msgs::msg::String::SharedPtr msg) const;
+            bool parseRequestMessage(RequestInfo *req_buf, const uwbips_utilities::msg::NodemanReq::SharedPtr serial_str);
+    
+            void requestExecute(RequestInfo *req);
 
-            void parseRequestJson(RequestInfo *info_buf, const std::string serial_str) const;
+            void createNode(std::string name, node_type type);
+
+            void destroyNode(std::string name, node_type type);
+
+            void shutdown();
     };
 }
 
