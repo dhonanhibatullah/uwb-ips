@@ -8,12 +8,12 @@
 #include "rclcpp/rclcpp.hpp"
 #include "uwbips_utilities/anchor_node.hpp"
 #include "uwbips_utilities/tag_node.hpp"
-#include "uwbips_utilities/msg/nodeman_req.hpp"
+#include "uwbips_utilities/msg/nodeman_control.hpp"
 
-#define NODE_MANAGER_TOPIC  "uwbips/nodeman"
-#define NODE_MANAGER_QOS    1000
-#define IPS_PROCESSOR_TOPIC "uwbips/ips_processor"
-#define IPS_PROCESSOR_QOS   1000
+#define NODEMAN_CONTROL_TOPIC   "uwbips/nodeman/control"
+#define NODEMAN_CONTROL_QOS     1000
+#define NODEMAN_NODE_TOPIC      "uwbips/node/"
+#define NODEMAN_NODE_QOS        1000
 
 using namespace std::chrono_literals;
 using std::placeholders::_1;
@@ -58,13 +58,13 @@ namespace uwbips {
 
             rclcpp::executors::MultiThreadedExecutor *executor;
 
-            rclcpp::Subscription<uwbips_utilities::msg::NodemanReq>::SharedPtr request_sub;
+            rclcpp::Subscription<uwbips_utilities::msg::NodemanControl>::SharedPtr request_sub;
 
-            void requestSubCallback(const uwbips_utilities::msg::NodemanReq::SharedPtr msg);
+            void requestSubCallback(const uwbips_utilities::msg::NodemanControl::SharedPtr msg);
             
             void executorThread();
 
-            bool parseRequestMessage(RequestInfo *req_buf, const uwbips_utilities::msg::NodemanReq::SharedPtr serial_str);
+            bool parseRequestMessage(RequestInfo *req_buf, const uwbips_utilities::msg::NodemanControl::SharedPtr serial_str);
     
             void requestExecute(RequestInfo *req);
 

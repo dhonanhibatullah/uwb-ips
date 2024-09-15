@@ -8,8 +8,8 @@
 #include <string>
 #include "rclcpp/rclcpp.hpp"
 
-#define NODE_MANAGER_TOPIC  "uwbips/nodeman"
-#define NODE_MANAGER_QOS    1000
+// #define NODE_MANAGER_TOPIC  "uwbips/nodeman/node_req"
+// #define NODE_MANAGER_QOS    1000
 
 using namespace std::chrono_literals;
 using std::placeholders::_1;

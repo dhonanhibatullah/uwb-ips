@@ -13,9 +13,9 @@
 
 #define SERIAL_PORT     "/dev/ttyUSB0"
 #define SERIAL_BAUDRATE 115200
-#define SERIAL_TX_TOPIC "espnowser/tx"
+#define SERIAL_TX_TOPIC "uwbips/espnowser/tx"
 #define SERIAL_TX_QOS   1000
-#define SERIAL_RX_TOPIC "espnowser/rx"
+#define SERIAL_RX_TOPIC "uwbips/espnowser/rx"
 #define SERIAL_RX_QOS   1000
 
 using namespace std::chrono_literals;

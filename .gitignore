@@ -4,3 +4,4 @@ log
 **/.vscode
 **/node_modules
 **/.pio
+.prettierrc.yaml

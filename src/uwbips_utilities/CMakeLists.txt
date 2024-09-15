@@ -16,7 +16,7 @@ find_package(rclcpp REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
 rosidl_generate_interfaces(${PROJECT_NAME}
-  "msg/NodemanReq.msg"
+  "msg/NodemanControl.msg"
   "msg/AnchorData.msg"
   "msg/TagData.msg"
   "msg/SerialData.msg"
@@ -38,7 +38,7 @@ target_link_libraries(node_manager
 
 add_executable(espnow_serial
   src/espnow_serial_main.cpp
-  src/uwbips_utilities/espnow_serial
+  src/uwbips_utilities/espnow_serial.cpp
 )
 ament_target_dependencies(espnow_serial
   rclcpp

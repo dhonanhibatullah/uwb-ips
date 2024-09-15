@@ -4,9 +4,9 @@
 
 uwbips::NodeManager::NodeManager(std::string node_name) : rclcpp::Node(node_name) {
 
-    this->request_sub = this->create_subscription<uwbips_utilities::msg::NodemanReq>(
-        NODE_MANAGER_TOPIC,
-        NODE_MANAGER_QOS,
+    this->request_sub = this->create_subscription<uwbips_utilities::msg::NodemanControl>(
+        NODEMAN_CONTROL_TOPIC,
+        NODEMAN_CONTROL_QOS,
         std::bind(&uwbips::NodeManager::requestSubCallback, this, _1)
     );
 
@@ -33,7 +33,7 @@ void uwbips::NodeManager::executorThread() {
 
 
 
-void uwbips::NodeManager::requestSubCallback(const uwbips_utilities::msg::NodemanReq::SharedPtr msg) {
+void uwbips::NodeManager::requestSubCallback(const uwbips_utilities::msg::NodemanControl::SharedPtr msg) {
 
     uwbips::NodeManager::RequestInfo req_info;
 
@@ -43,7 +43,7 @@ void uwbips::NodeManager::requestSubCallback(const uwbips_utilities::msg::Nodema
 
 
 
-bool uwbips::NodeManager::parseRequestMessage(uwbips::NodeManager::RequestInfo *req_buf, const uwbips_utilities::msg::NodemanReq::SharedPtr msg) {
+bool uwbips::NodeManager::parseRequestMessage(uwbips::NodeManager::RequestInfo *req_buf, const uwbips_utilities::msg::NodemanControl::SharedPtr msg) {
     
     req_buf->name = msg->name;
 
