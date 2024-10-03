@@ -1,7 +1,8 @@
 build
 install
 log
+.prettierrc.yaml
 **/.vscode
 **/node_modules
 **/.pio
-.prettierrc.yaml
+**/.env

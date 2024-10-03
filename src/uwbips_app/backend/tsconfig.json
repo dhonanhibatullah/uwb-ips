@@ -13,6 +13,6 @@
     "services/**/*.ts",
     "controllers/**/*.ts",
     "routes/**/*.ts",
-    "shared/**/*.ts"
+    "utils/**/*.ts"
   ]
 }
